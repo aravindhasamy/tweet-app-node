@@ -45,4 +45,28 @@ router.delete('/tweets/:id', async (req, res) => {
     }
 })
 
+router.put('/tweets/:id', async (req, res) => {
+    res.append('Access-Control-Allow-Methods', 'POST, OPTIONS, PUT');
+    res.append('Access-Control-Allow-Origin', req.header('origin') || req.header('x-forwarded-host') || req.header('referer') || req.header('host'))
+    const updates = Object.keys(req.body)
+    console.log("put_body", req.body)
+    try {
+        const tweet = await Tweet.findOne({ _id: req.params.id})
+
+        if (!tweet) {
+            return res.status(404).send()
+        }
+
+        updates.forEach((update) => tweet[update] = req.body[update])
+        await tweet.save()
+        res.send(tweet)
+        
+    } catch (e) {
+        console.log("put_error", e)
+        res.status(400).send(e)
+    }
+})
+
+
+
 module.exports = router
