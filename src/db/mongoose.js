@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-mongoose.connect("mongodb://127.0.0.1:27017/tweet-api", {
+mongoose.connect("mongodb+srv://taskapp:Aravind%40123@cluster0.udqpn.mongodb.net/tweet-api?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     
 }).then(() => {
